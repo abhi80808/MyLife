@@ -1,8 +1,13 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import  {useEffect} from 'react';
+import axios from 'axios';
 
 function App() {
+
+useEffect(() => {
+  axios.patch('http://172.16.58.153:2600/').then((response) => {
+    console.log(response);
+  })
+});
 
   return (
     <div className="App">
