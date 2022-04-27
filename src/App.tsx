@@ -1,18 +1,19 @@
-import  {useEffect} from 'react';
-import axios from 'axios';
+import { FC } from 'react';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import LoginPage from './pages/Login.page';
+import SignupPage from './pages/Signup.page';
 
-function App() {
+interface Props { }
 
-useEffect(() => {
-  axios.patch('http://172.16.58.153:2600/').then((response) => {
-    console.log(response);
-  })
-});
+const App: FC<Props> = (props) => {
 
   return (
-    <div className="App">
-      My Life App
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginPage />}></Route>
+        <Route path="/signup" element={<SignupPage />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
