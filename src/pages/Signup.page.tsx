@@ -1,13 +1,14 @@
 import { FC, useState } from 'react';
 import * as Yup from 'yup';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import axios from 'axios';
-import {BASE_URL} from '../constants/constants';
+import { BASE_URL } from '../constants/constants';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 interface Props { }
 
 const Signup: FC<Props> = (props) => {
-  
+
   const SignupSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required!!'),
     username: Yup.string()
@@ -68,15 +69,17 @@ const Signup: FC<Props> = (props) => {
               value={values.email}
             />
             {errors.email && touched.email && errors.email}
-            <input
-              className="px-1 rounded-sm"
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-            /> <button onClick={() => setShowPassword(!showPassword)}>O</button>
+            <div className="flex flex-row items-center">
+              <input
+                className="px-1 rounded-l-sm"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+              /> <button type="button" className="bg-white h-full pr-1 rounded-r-sm" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}</button>
+            </div>
             {errors.password && touched.password && errors.password}
             <input
               className="px-1 rounded-sm"

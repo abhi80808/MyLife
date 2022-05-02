@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { BASE_URL } from '../constants/constants';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 interface Props { }
 
@@ -53,15 +54,17 @@ const Login: FC<Props> = (props) => {
                             value={values.username}
                         />
                         {errors.username && touched.username && errors.username}
-                        <input
-                            className="px-1 rounded-sm"
-                            type={showPassword ? "text" : "password"}
-                            name="password"
-                            placeholder="Password"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.password}
-                        /> <button onClick={() => setShowPassword(!showPassword)}>O</button>
+                        <div className="flex flex-row items-center">
+                            <input
+                                className="px-1 rounded-l-sm"
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                placeholder="Password"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.password}
+                            /> <button type="button" className="bg-white h-full pr-1 rounded-r-sm" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}</button>
+                        </div>
                         {errors.password && touched.password && errors.password}
                         <button className="border border-green-800 max-w-max self-center px-1.5 py-1 bg-green-500 rounded-md text-white" type="submit" disabled={isSubmitting}>
                             Submit
