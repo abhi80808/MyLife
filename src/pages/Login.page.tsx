@@ -2,8 +2,9 @@ import { FC, useState } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { BASE_URL } from '../constants/constants';
+import { BASE_URL, LS_AUTH_TOKEN } from '../constants/constants';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 interface Props { }
 
@@ -17,6 +18,8 @@ const Login: FC<Props> = (props) => {
         password: Yup.string().required('Password is required!!'),
     });
 
+    const navigate = useNavigate();
+
     const [showPassword, setShowPassword] = useState(false);
 
     return (
@@ -27,7 +30,8 @@ const Login: FC<Props> = (props) => {
                 validationSchema={LoginSchema}
                 onSubmit={async (values, { setSubmitting }) => {
                     await axios.post(BASE_URL + "/login", values).then((response) => {
-                        localStorage.setItem('auth_token', response.data.token);
+                        localStorage.setItem(LS_AUTH_TOKEN, response.data.token);
+                        navigate("/dashboard");
                     }).catch((err) => {
                         console.log(err);
                     });
