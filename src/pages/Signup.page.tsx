@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface Props { }
 
-const Signup: FC<Props> = (props) => {
+const SignupPage: FC<Props> = (props) => {
 
   const SignupSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required!!'),
@@ -125,4 +125,4 @@ const Signup: FC<Props> = (props) => {
   );
 }
 
-export default Signup;
+export default SignupPage;

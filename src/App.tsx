@@ -5,6 +5,7 @@ import LoginPage from './pages/Login.page';
 import SignupPage from './pages/Signup.page';
 import DashboardPage from './pages/Dashboard.page';
 import FundsPage from './pages/Funds.page';
+import DayManagement from './pages/DayManagement';
 
 interface Props { }
 
@@ -27,6 +28,7 @@ const App: FC<Props> = (props) => {
           {token ? <></> : <Link className="border px-2 py-0.5 rounded" to="/login">Login</Link>}
           {token ? <></> : <Link className="border px-2 py-0.5 rounded" to="/signup">Signup</Link>}
           {token ? <Link className="border px-2 py-0.5 rounded" to="/funds">Funds</Link> : <></>}
+          {token ? <Link className="border px-2 py-0.5 rounded" to="/dayManagement">Manage Day</Link> : <></>}
           {token ? <button type="button" className="border px-2 py-0.5 rounded" onClick={handleLogout}>Logout</button> : <></>}
         </div>
       </nav>
@@ -35,6 +37,7 @@ const App: FC<Props> = (props) => {
         <Route path="/signup" element={token ? <Navigate to="/dashboard"></Navigate> : <SignupPage />}></Route>
         <Route path="/dashboard" element={token ? <DashboardPage></DashboardPage> : <Navigate to="/login"></Navigate>}></Route>
         <Route path="/funds" element={token ? <FundsPage></FundsPage> : <Navigate to="/login"></Navigate>}></Route>
+        <Route path="/dayManagement" element={token ? <DayManagement></DayManagement> : <Navigate to="/login"></Navigate>}></Route>
       </Routes>
     </div>
   );

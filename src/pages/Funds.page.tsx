@@ -6,7 +6,7 @@ import { NetWorthResponse } from '../models/Finance';
 
 interface Props { }
 
-const Funds: FC<Props> = (props) => {
+const FundsPage: FC<Props> = (props) => {
 
     const [finance, setFinance] = useState<NetWorthResponse>();
 
@@ -26,6 +26,7 @@ const Funds: FC<Props> = (props) => {
 
     return (
         <div className="flex flex-col h-screen items-center bg-gradient-to-r from-orange-300 to-pink-300">
+            {(finance?.funds.length === 0) ? <div>You don't have any fund storages yet.</div> : <></>}
             {finance?.funds.map((fund, key) => {
                 return (
                     <div className="flex flex-row bg-white w-full justify-between p-4 my-3" key={key}>
@@ -41,4 +42,4 @@ const Funds: FC<Props> = (props) => {
     );
 }
 
-export default Funds;
+export default FundsPage;

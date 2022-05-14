@@ -6,7 +6,7 @@ import { User } from '../models/User';
 
 interface Props { }
 
-const Dashboard: FC<Props> = (props) => {
+const DashboardPage: FC<Props> = (props) => {
 
     const [user, setUser] = useState<User>();
 
@@ -31,4 +31,4 @@ const Dashboard: FC<Props> = (props) => {
     );
 }
 
-export default Dashboard;
+export default DashboardPage;

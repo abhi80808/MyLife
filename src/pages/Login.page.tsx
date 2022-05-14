@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface Props { }
 
-const Login: FC<Props> = (props) => {
+const LoginPage: FC<Props> = (props) => {
 
     const LoginSchema = Yup.object().shape({
         username: Yup.string()
@@ -80,4 +80,4 @@ const Login: FC<Props> = (props) => {
     );
 }
 
-export default Login;
+export default LoginPage;
