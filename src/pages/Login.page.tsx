@@ -49,7 +49,7 @@ const Login: FC<Props> = (props) => {
                 }) => (
                     <form className="flex flex-col space-y-1.5" onSubmit={handleSubmit}>
                         <input
-                            className="px-1 rounded-sm"
+                            className="px-1 rounded-sm outline-none"
                             type="text"
                             name="username"
                             placeholder="Username"
@@ -60,7 +60,7 @@ const Login: FC<Props> = (props) => {
                         {errors.username && touched.username && errors.username}
                         <div className="flex flex-row items-center">
                             <input
-                                className="px-1 rounded-l-sm"
+                                className="px-1 rounded-l-sm outline-none"
                                 type={showPassword ? "text" : "password"}
                                 name="password"
                                 placeholder="Password"

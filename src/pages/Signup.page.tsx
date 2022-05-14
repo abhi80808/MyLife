@@ -54,7 +54,7 @@ const Signup: FC<Props> = (props) => {
         }) => (
           <form className="flex flex-col space-y-1.5" onSubmit={handleSubmit}>
             <input
-              className="px-1 rounded-sm"
+              className="px-1 rounded-sm outline-none"
               type="text"
               name="username"
               placeholder="Username"
@@ -64,7 +64,7 @@ const Signup: FC<Props> = (props) => {
             />
             {errors.username && touched.username && errors.username}
             <input
-              className="px-1 rounded-sm"
+              className="px-1 rounded-sm outline-none"
               type="email"
               name="email"
               placeholder="Email"
@@ -75,7 +75,7 @@ const Signup: FC<Props> = (props) => {
             {errors.email && touched.email && errors.email}
             <div className="flex flex-row items-center">
               <input
-                className="px-1 rounded-l-sm"
+                className="px-1 rounded-l-sm outline-none"
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Password"
@@ -86,7 +86,7 @@ const Signup: FC<Props> = (props) => {
             </div>
             {errors.password && touched.password && errors.password}
             <input
-              className="px-1 rounded-sm"
+              className="px-1 rounded-sm outline-none"
               type="text"
               name="firstName"
               placeholder="First Name"
@@ -96,7 +96,7 @@ const Signup: FC<Props> = (props) => {
             />
             {errors.firstName && touched.firstName && errors.firstName}
             <input
-              className="px-1 rounded-sm"
+              className="px-1 rounded-sm outline-none"
               type="text"
               name="middleName"
               placeholder="Middle Name"
@@ -106,7 +106,7 @@ const Signup: FC<Props> = (props) => {
             />
             {errors.middleName && touched.middleName && errors.middleName}
             <input
-              className="px-1 rounded-sm"
+              className="px-1 rounded-sm outline-none"
               type="text"
               name="lastName"
               placeholder="Last Name"
