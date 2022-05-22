@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { FC, useEffect, useState } from 'react';
 import { axiosRequest, axiosResponse } from '../axios/axios';
+import CreateDailyTask from '../components/CreateDailyTask';
 import { BASE_URL } from '../constants/constants';
 import { DayManagement } from '../models/DayManagement';
 
@@ -9,6 +10,7 @@ interface Props { }
 const DayManagementPage: FC<Props> = (props) => {
 
     const [dayManagement, setDayManagement] = useState<DayManagement>();
+    const [createTaskFormDialogBox, setCreateTaskFormDialogBox] = useState(false);
 
     useEffect(() => {
         const getUser = async () => {
@@ -43,14 +45,14 @@ const DayManagementPage: FC<Props> = (props) => {
         });
     }
 
-    const updateRemarks = async(remarks: string, dailyTaskKey: number, taskKey: number) => {
-        if(dayManagement) {
+    const updateRemarks = async (remarks: string, dailyTaskKey: number, taskKey: number) => {
+        if (dayManagement) {
             dayManagement.dailyTasks[dailyTaskKey].tasks[taskKey].remarks = remarks;
             setDayManagement({ ...dayManagement });
         }
     }
 
-    const handleUpdateRemarks = async(dailyTaskId: Number, taskSNo: Number, dailyTaskKey: number, taskKey: number) => {
+    const handleUpdateRemarks = async (dailyTaskId: Number, taskSNo: Number, dailyTaskKey: number, taskKey: number) => {
         const remarks = dayManagement?.dailyTasks[dailyTaskKey].tasks[taskKey].remarks;
         axiosRequest();
         axiosResponse();
@@ -60,11 +62,13 @@ const DayManagementPage: FC<Props> = (props) => {
                 taskSNo,
                 remarks
             }
-        }).then((response) => {}).catch((err) => {console.log(err)});
+        }).then((response) => { }).catch((err) => { console.log(err) });
     }
 
     return (
-        <div className="flex flex-col h-screen justify-center items-center bg-gradient-to-r from-orange-300 to-pink-300">
+        <div className=" flex flex-col h-screen justify-center items-center bg-gradient-to-r from-orange-300 to-pink-300">
+            <button type="button" className="border border-black bg-green-400 p-2 rounded-md" onClick={() => setCreateTaskFormDialogBox(true)}>Create Daily Task</button>
+            <CreateDailyTask className={`${createTaskFormDialogBox ? "absolute" : "hidden"}`} setCreateTaskFormDialogBox={setCreateTaskFormDialogBox}></CreateDailyTask>
             {dayManagement?.dailyTasks.map((dailyTask, dailyTaskKey) => {
                 return (
                     <div key={dailyTaskKey} className="flex flex-col">
