@@ -1,10 +1,8 @@
 import { FC, useState } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import axios from 'axios';
-import { BASE_URL } from '../constants/constants';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { signup } from '../api/User';
 
 interface Props { }
 
@@ -24,8 +22,6 @@ const SignupPage: FC<Props> = (props) => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const navigate = useNavigate();
-
   return (
     <div className="flex flex-col h-screen justify-center items-center bg-gradient-to-r from-orange-300 to-pink-300">
       <h1 className="text-xl font-extrabold">Signup</h1>
@@ -33,13 +29,7 @@ const SignupPage: FC<Props> = (props) => {
         initialValues={{ username: '', password: '', email: '', firstName: '', middleName: '', lastName: '' }}
         validationSchema={SignupSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          await axios.post(BASE_URL + "/signup", values).then((response) => {
-            // localStorage.setItem('auth_token', response.data.token);
-            // console.log(response);
-            navigate("/login");
-          }).catch((err) => {
-            console.log(err);
-          });
+          await signup(values);
           setSubmitting(false);
         }}
       >

@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { FC, useEffect, useState } from 'react';
-import { axiosRequest, axiosResponse } from '../axios/axios';
-import { BASE_URL } from '../constants/constants';
+import { me } from '../api/User';
 import { User } from '../models/User';
 
 interface Props { }
@@ -12,13 +10,7 @@ const DashboardPage: FC<Props> = (props) => {
 
     useEffect(() => {
         const getUser = async () => {
-            axiosRequest();
-            axiosResponse();
-            await axios.get(BASE_URL + "/me").then((response) => {
-                setUser(response.data);
-            }).catch((err) => {
-                console.log(err);
-            });
+            setUser(await me())
         }
 
         getUser();
