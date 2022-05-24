@@ -4,6 +4,7 @@ import { axiosRequest, axiosResponse } from '../axios/axios';
 import { BASE_URL } from '../constants/constants';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { getTommorowDate } from '../utils/Dates';
 
 interface Props {
     className: string,
@@ -33,7 +34,7 @@ const CreateDailyTask: FC<Props> = ({ className, setCreateTaskFormDialogBox }) =
             <div className={`flex flex-col justify-center items-center`}>
                 <Formik
                     initialValues={{
-                        title: "", date: "2022-05-30", tasks: [{
+                        title: "", date: getTommorowDate('-'), tasks: [{
                             task: "",
                             sNo: 1,
                             remarks: ""
@@ -69,7 +70,7 @@ const CreateDailyTask: FC<Props> = ({ className, setCreateTaskFormDialogBox }) =
                             {errors.title && touched.title && errors.title}
                             <input
                                 className="px-1 rounded-sm outline-none"
-                                type="text"
+                                type="date"
                                 name="date"
                                 placeholder="Date"
                                 onChange={handleChange}

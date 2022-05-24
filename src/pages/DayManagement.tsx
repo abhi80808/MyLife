@@ -4,6 +4,7 @@ import { axiosRequest, axiosResponse } from '../axios/axios';
 import CreateDailyTask from '../components/CreateDailyTask';
 import { BASE_URL } from '../constants/constants';
 import { DailyTask } from '../models/DailyTask';
+import { getCurrentDate } from '../utils/Dates';
 
 interface Props { }
 
@@ -11,12 +12,14 @@ const DayManagementPage: FC<Props> = (props) => {
 
     const [dailyTasks, setDailyTasks] = useState<DailyTask[]>();
     const [createTaskFormDialogBox, setCreateTaskFormDialogBox] = useState(false);
+    const [startDate, setStartDate] = useState(getCurrentDate('-'));
+    const [endDate, setEndDate] = useState(getCurrentDate('-'));
 
     useEffect(() => {
         const getUser = async () => {
             axiosRequest();
             axiosResponse();
-            await axios.get(BASE_URL + "/dailyTasks", {params: {startDate: "2022-05-04", endDate: "2022-05-05"}}).then((response) => {
+            await axios.get(BASE_URL + "/dailyTasks", { params: { startDate: startDate, endDate: endDate } }).then((response) => {
                 setDailyTasks(response.data);
             }).catch((err) => {
                 console.log(err);
@@ -24,7 +27,7 @@ const DayManagementPage: FC<Props> = (props) => {
         }
 
         getUser();
-    }, []);
+    }, [startDate, endDate]);
 
     const handleUpdateCompletionStatus = async (dailyTaskId: Number, taskSNo: Number, completionStatus: boolean, dailyTaskKey: number, taskKey: number) => {
         if (dailyTasks) {
@@ -48,7 +51,7 @@ const DayManagementPage: FC<Props> = (props) => {
     const updateRemarks = async (remarks: string, dailyTaskKey: number, taskKey: number) => {
         if (dailyTasks) {
             dailyTasks[dailyTaskKey].tasks[taskKey].remarks = remarks;
-            setDailyTasks([ ...dailyTasks ]);
+            setDailyTasks([...dailyTasks]);
         }
     }
 
@@ -69,6 +72,8 @@ const DayManagementPage: FC<Props> = (props) => {
         <div className=" flex flex-col h-screen justify-center items-center bg-gradient-to-r from-orange-300 to-pink-300">
             <button type="button" className="border border-black bg-green-400 p-2 rounded-md" onClick={() => setCreateTaskFormDialogBox(true)}>Create Daily Task</button>
             <CreateDailyTask className={`${createTaskFormDialogBox ? "absolute" : "hidden"}`} setCreateTaskFormDialogBox={setCreateTaskFormDialogBox}></CreateDailyTask>
+            <input type="date" onChange={e => setStartDate(e.target.value)} placeholder="Start Date" />
+            <input type="date" onChange={e => setEndDate(e.target.value)} placeholder="End Date" />
             {dailyTasks && dailyTasks.map((dailyTask, dailyTaskKey) => {
                 return (
                     <div key={dailyTaskKey} className="flex flex-col">
