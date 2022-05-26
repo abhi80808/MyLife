@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { Dispatch, FC, SetStateAction,  useState } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { axiosRequest, axiosResponse } from '../axios/axios';
 import { BASE_URL } from '../constants/constants';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { getTommorowDate } from '../utils/Dates';
+import {GrAddCircle} from 'react-icons/gr';
 
 interface Props {
     className: string,
@@ -30,8 +31,8 @@ const CreateDailyTask: FC<Props> = ({ className, setCreateTaskFormDialogBox }) =
     });
 
     return (
-        <div className={`bg-white ${className}`}>
-            <div className={`flex flex-col justify-center items-center`}>
+        <div className={`bg-white w-full ${className}`}>
+            <div className={`m-1 border border-black p-1 flex flex-col justify-center items-center`}>
                 <Formik
                     initialValues={{
                         title: "", date: getTommorowDate('-'), tasks: [{
@@ -46,69 +47,70 @@ const CreateDailyTask: FC<Props> = ({ className, setCreateTaskFormDialogBox }) =
                         axiosResponse();
                         await axios.post(BASE_URL + "/dailyTask/add", values).then((response) => {
                             // navigate("/daymanagement");
-                            window.location.href="/dayManagement";
-                          }).catch((err) => {
+                            window.location.href = "/dayManagement";
+                        }).catch((err) => {
                             console.log(err);
-                          });
-                          setSubmitting(false);
+                        });
+                        setSubmitting(false);
                     }}
                 >
                     {({ values, errors, touched, handleChange, handleBlur, handleSubmit, handleReset }) => (
-                        <form onSubmit={(e) => {
-                            e.preventDefault();
-                            handleSubmit();
-                        }} method="POST">
-                            <input
-                                className="px-1 rounded-sm outline-none"
-                                type="text"
-                                name="title"
-                                placeholder="Title"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.title}
-                            />
-                            {errors.title && touched.title && errors.title}
-                            <input
-                                className="px-1 rounded-sm outline-none"
-                                type="date"
-                                name="date"
-                                placeholder="Date"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.date}
-                            />
-                            {errors.date && touched.date && errors.date}
-                            <span onClick={() => {
-                                setCurrentTaskSNo(currentTaskSNo + 1);
-                                values.tasks.push({
-                                    task: "",
-                                    sNo: currentTaskSNo,
-                                    remarks: ""
-                                })
-                            }}>+</span>
+                        <form
+                            className="flex flex-col space-y-4"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleSubmit();
+                            }} method="POST">
+                            <label>
+                                <span className="text-xs font-light">Title:</span>
+                                <input
+                                    className="px-1 rounded-sm outline-none w-full border-b border-black"
+                                    type="text"
+                                    name="title"
+                                    placeholder="Title"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.title}
+                                />
+                                {errors.title && touched.title && errors.title}
+                            </label>
+                            <label className="flex flex-row space-x-1 items-center">
+                                <span className="text-xs font-light">Date:</span>
+                                <input
+                                    className="px-1 rounded-sm outline-none"
+                                    type="date"
+                                    name="date"
+                                    placeholder="Date"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.date}
+                                />
+                                {errors.date && touched.date && errors.date}
+                            </label>
                             {values.tasks.map((task, key) => {
-                                return <div key={key}>
-                                    <input
-                                        className="px-1 rounded-sm outline-none"
-                                        type="number"
-                                        name={`tasks[${key}].sNo`}
-                                        placeholder="Serial Number"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.tasks[key].sNo}
-                                    />
-                                    <input
-                                        className="px-1 rounded-sm outline-none"
-                                        type="text"
-                                        name={`tasks[${key}].task`}
-                                        placeholder="Task"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.tasks[key].task}
-                                    />
-                                    <input
-                                        className="px-1 rounded-sm outline-none"
-                                        type="text"
+                                return <div key={key} className="flex flex-col w-full space-y-1">
+                                    <div className="flex flex-row space-x-1">
+                                        <input
+                                            className="px-1 rounded-sm outline-none w-1/12 border-b border-black"
+                                            type="number"
+                                            name={`tasks[${key}].sNo`}
+                                            placeholder="Serial Number"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.tasks[key].sNo}
+                                        />
+                                        <input
+                                            className="px-1 rounded-sm outline-none w-11/12 border-b border-black"
+                                            type="text"
+                                            name={`tasks[${key}].task`}
+                                            placeholder="Task"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.tasks[key].task}
+                                        />
+                                    </div>
+                                    <textarea
+                                        className="px-1 rounded-sm outline-none border-b border-black"
                                         name={`tasks[${key}].remarks`}
                                         placeholder="Remarks"
                                         onChange={handleChange}
@@ -117,11 +119,21 @@ const CreateDailyTask: FC<Props> = ({ className, setCreateTaskFormDialogBox }) =
                                     />
                                 </div>;
                             })}
-                            <button type="submit">Submit</button>
-                            <button type="reset" onClick={() => {
-                                handleReset();
-                                setCreateTaskFormDialogBox(false);
-                            }}>Cancel</button>
+                            <span onClick={() => {
+                                setCurrentTaskSNo(currentTaskSNo + 1);
+                                values.tasks.push({
+                                    task: "",
+                                    sNo: currentTaskSNo,
+                                    remarks: ""
+                                })
+                            }}><GrAddCircle></GrAddCircle></span>
+                            <div className="flex flex-row space-x-2">
+                                <button className="bg-green-500 p-2 rounded-sm" type="submit">Submit</button>
+                                <button className="bg-red-400 p-2 rounded-sm" type="reset" onClick={() => {
+                                    handleReset();
+                                    setCreateTaskFormDialogBox(false);
+                                }}>Cancel</button>
+                            </div>
                         </form>
                     )}
                 </Formik>
