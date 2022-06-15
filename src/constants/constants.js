@@ -1,2 +1,2 @@
-export const BASE_URL = "http://192.168.0.111:2600";
+export const BASE_URL = " https://sleepy-shore-33348.herokuapp.com/";
 export const LS_AUTH_TOKEN = "auth_token";
