@@ -6,6 +6,7 @@ import { BASE_URL } from '../constants/constants';
 import { DailyTask } from '../models/DailyTask';
 import { getCurrentDate } from '../utils/Dates';
 import { GiCrossMark } from 'react-icons/gi';
+import { ImBin } from 'react-icons/im';
 
 interface Props { }
 
@@ -70,6 +71,17 @@ const DayManagementPage: FC<Props> = (props) => {
         }).then((response) => { }).catch((err) => { console.log(err) });
     }
 
+    const handleDeleteDailyTasks = async (dailyTaskId: number, dailyTaskKey: number) => {
+        if(!window.confirm("Are you sure you want to delete this goal?")) return;
+        if (dailyTasks) {
+            dailyTasks.splice(dailyTaskKey, 1);
+            setDailyTasks([...dailyTasks]);
+        }
+        axiosRequest();
+        axiosResponse();
+        await axios.delete(BASE_URL + "/dailyTasks", { params: { dailyTaskId } }).then((response) => { }).catch((err) => { console.log(err) });
+    }
+
     return (
         <div>
             <button className="border-r p-2 rounded-r-full absolute self-center" onClick={() => setShowSidebar(!showSidebar)}>&gt;</button>
@@ -103,7 +115,10 @@ const DayManagementPage: FC<Props> = (props) => {
                         return (
                             <div key={dailyTaskKey} className="border rounded-sm p-1.5 flex flex-col space-y-1">
                                 <div className="flex flex-row items-center justify-between space-x-1">
-                                    <span className="text-xl font-bold overflow-y-auto">{dailyTask.title}</span>
+                                    <div className="flex flex-row space-x-3 overflow-y-auto">
+                                        <span className="text-xl font-bold overflow-y-auto">{dailyTask.title}</span>
+                                        <button onClick={(e) => handleDeleteDailyTasks(dailyTask.id, dailyTaskKey)}><ImBin className="fill-red-700 h-5 w-5"></ImBin></button>
+                                    </div>
                                     <span className="text-sm min-w-max">{dailyTask.date.toString().substring(0, 10)}</span>
                                 </div>
                                 {dailyTask.tasks.map((task, taskKey) => {

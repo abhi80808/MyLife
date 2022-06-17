@@ -41,7 +41,6 @@ const CreateGoal: FC<Props> = ({ className, setCreateGoalFormDialogBox }) => {
                         axiosRequest();
                         axiosResponse();
                         await axios.post(BASE_URL + "/goals/add", values).then((response) => {
-                            // navigate("/daymanagement");
                             window.location.href = "/goalManagement";
                         }).catch((err) => {
                             console.log(err);
