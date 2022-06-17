@@ -1,2 +1,2 @@
-export const BASE_URL = "https://stormy-mountain-82276.herokuapp.com";
+export const BASE_URL = "http://localhost:2600";
 export const LS_AUTH_TOKEN = "auth_token";
